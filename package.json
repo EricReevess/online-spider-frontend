@@ -1,0 +1,62 @@
+{
+  "name": "manage-system-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.6.3",
+    "antd-img-crop": "^3.10.0",
+    "axios": "^0.19.2",
+    "echarts": "^4.9.0",
+    "echarts-for-react": "^2.0.16",
+    "font-awesome": "^4.7.0",
+    "js-cookie": "^2.2.1",
+    "jsonp": "^0.2.1",
+    "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.8.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.3.0",
+    "store": "^2.0.12"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired testm ",
+    "eject": "react-scripts eject",
+    "clint": "serve build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "css-loader": "^4.2.1",
+    "customize-cra": "^1.0.0",
+    "less": "^3.12.2",
+    "less-loader": "^6.2.0",
+    "react-app-rewired": "^2.1.6",
+    "redux-devtools-extension": "^2.13.8",
+    "style-loader": "^1.2.1"
+  },
+  "proxy": "http://localhost:4000"
+}
