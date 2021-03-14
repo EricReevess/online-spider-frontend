@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import './register.less'
 import 'font-awesome/css/font-awesome.css'
 import { Redirect, useHistory } from 'react-router-dom'
-import { Form, Input, Button, Checkbox, message } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import {
   UserOutlined, LockOutlined, EyeTwoTone, EyeInvisibleOutlined, MailOutlined, PhoneOutlined
 } from '@ant-design/icons'
 import { connect } from 'react-redux'
 import { login } from '../../redux/actions'
-import { addUserRequest, registerUserRequest, updateUserRequest } from '../../api'
+import {  registerUserRequest } from '../../api'
 
 const Register = ({ userInfo, login }) => {
   let history = useHistory()

@@ -7,7 +7,7 @@ import {
   getProductListRequest,
   searchProductRequest,
   deleteProductRequest,
-  updateProductStatusRequest, deleteRoleRequest
+  updateProductStatusRequest,
 } from '../../api'
 import ProductAddUpdate from './user-data-add-update'
 import UserDataDetail from './user-data-detail'
@@ -46,9 +46,9 @@ const UserDataList = () => {
     })
   }
 
-  const updateProductInfo = (render) => {
+  /*const updateProductInfo = (render) => {
     setAddDrawerVisible(true)
-  }
+  }*/
 
 
   const getProductList =  (pageNum = 1) => {

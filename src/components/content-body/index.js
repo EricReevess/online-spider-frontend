@@ -10,7 +10,7 @@ import Line from '../../views/charts/line'
 import Pie from '../../views/charts/pie'
 import UserData from '../../views/user-data/user-data'
 // import tempMemoryUtil from '../../utils/tempMemoryUtil'
-
+import './content-body.less'
 const { Content } = Layout
 const ContentBody = () => {
 
@@ -24,7 +24,7 @@ const ContentBody = () => {
   }*/
 
   return (<Content>
-    <div style={{ padding: 24, minHeight: 360 }}>
+    <div className="content-body">
       <Switch>
         <Route path="/home" component={Home}/>
         <Route path="/user-data" component={UserData}/>

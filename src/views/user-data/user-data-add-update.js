@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react'
-import { Drawer, Form, Button, Col, Row, Input, Cascader, message } from 'antd'
+import { Drawer, Form, Button, Col, Row, Input, message } from 'antd'
 import PropTypes from 'prop-types'
 import { addProductRequest, updateProductRequest } from '../../api/'
 import PicturesWall from './pictures-wall'

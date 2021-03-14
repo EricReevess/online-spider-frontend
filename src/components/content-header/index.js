@@ -37,7 +37,7 @@ const ContentHeader = ({ logout,navTitle,userInfo }) => {
       cancel()
     }
   }, [initWeatherInfo])
-  return (<div>
+  return (
     <Header
       className="content-header">
       <div className="content-header-left">
@@ -60,8 +60,7 @@ const ContentHeader = ({ logout,navTitle,userInfo }) => {
           <p>确定要退出登录吗？</p>
         </Modal>
       </div>
-    </Header>
-  </div>)
+    </Header>)
 
 }
 
