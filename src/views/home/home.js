@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Col, Row, Form, Button, InputNumber, Input, message } from 'antd'
+import { grabRequest } from '../../api'
 import ReactEcharts from 'echarts-for-react'
 import { Select } from 'antd'
 import './home.less'
@@ -47,12 +48,20 @@ const Home = () => {
     setLimit(limit)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(selectedSource,category,keyword,limit)
     if (!keyword){
       message.warn('关键词不能为空')
     } else {
       message.loading('发送请求...')
+      const result= await grabRequest({selectedSource,category,keyword,limit})
+      console.log(result)
+      // if (result.status === 0) {
+      //   message.success(result.msg || '注册成功')
+      // } else {
+      //   message.error(result.msg || '注册失败')
+      // }
+
     }
 
   }

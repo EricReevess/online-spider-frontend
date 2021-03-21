@@ -88,6 +88,10 @@ const updateUserRequest = (user) =>
 const deleteUserRequest = (userId) =>
   ajax('POST', '/manage/user/delete', { userId })
 
+const grabRequest = (requestInfo) =>
+  ajax('GET', '/spider/grab', requestInfo)
+
+
 export {
   loginRequest,
   weatherRequest,
@@ -111,6 +115,7 @@ export {
   registerUserRequest,
   updateUserRequest,
   deleteUserRequest,
+  grabRequest,
   cancel
 
 }

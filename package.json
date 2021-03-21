@@ -55,6 +55,7 @@
     "less": "^3.12.2",
     "less-loader": "^6.2.0",
     "react-app-rewired": "^2.1.6",
+    "react-cookies": "^0.1.1",
     "redux-devtools-extension": "^2.13.8",
     "style-loader": "^1.2.1"
   },

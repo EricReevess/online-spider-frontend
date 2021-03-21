@@ -4,7 +4,6 @@ import { LOGOUT, SET_NAV_TITLE, SET_USER_INFO } from './action-types'
 
 const initNavTitle = ''
 const initUserInfo = localStorageUtil.getData('userInfo') || {}
-
 const navTitle = (state=initNavTitle, action) => {
   switch (action.type) {
     case SET_NAV_TITLE:
