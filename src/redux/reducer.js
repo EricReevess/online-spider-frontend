@@ -1,4 +1,5 @@
 import  {combineReducers} from 'redux'
+import cookie from 'react-cookies'
 import localStorageUtil from '../utils/localStorageUtil'
 import { LOGOUT, SET_NAV_TITLE, SET_USER_INFO } from './action-types'
 
@@ -20,6 +21,7 @@ const userInfo = (state =initUserInfo, action ) => {
       return action.data
     case LOGOUT:
       localStorageUtil.removeData('userInfo')
+      cookie.remove('uid')
       return {}
     default:
       return state

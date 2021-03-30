@@ -89,8 +89,13 @@ const deleteUserRequest = (userId) =>
   ajax('POST', '/manage/user/delete', { userId })
 
 const grabRequest = (requestInfo) =>
-  ajax('GET', '/spider/grab', requestInfo)
+  ajax('POST', '/spider/grab', requestInfo)
 
+const requestQueueStatus = () => 
+  ajax('GET', '/spider/queue_status')
+
+const userRequestList = (pageNum, pageSize, uid) => 
+  ajax('GET', '/spider/grab-request-list', {pageNum, pageSize, uid})
 
 export {
   loginRequest,
@@ -116,6 +121,8 @@ export {
   updateUserRequest,
   deleteUserRequest,
   grabRequest,
+  requestQueueStatus,
+  userRequestList,
   cancel
 
 }
