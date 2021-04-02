@@ -97,6 +97,12 @@ const requestQueueStatus = () =>
 const userRequestList = (pageNum, pageSize, uid) => 
   ajax('GET', '/spider/grab-request-list', {pageNum, pageSize, uid})
 
+const deleteUserGrabRequest = (uid, requestId) => 
+  ajax('POST', '/spider/delete_user_request', {uid, requestId})
+
+const getGrabbedData = (pageNum, pageSize, grabbedDataId) =>
+  ajax('GET', '/spider/grab-data-list', {pageNum, pageSize, grabbedDataId})
+
 export {
   loginRequest,
   weatherRequest,
@@ -123,6 +129,8 @@ export {
   grabRequest,
   requestQueueStatus,
   userRequestList,
+  deleteUserGrabRequest,
+  getGrabbedData,
   cancel
 
 }

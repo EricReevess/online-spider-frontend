@@ -47,7 +47,7 @@ const columns = [{
       case -1:
         return '已完成'
       default:
-        return '排队中:' + render.status 
+        return '排队中:' + render.state
     }
   },fixed: 'right'
 }]
@@ -105,11 +105,6 @@ const Home = () => {
         message.success('添加抓取请求成功')
         getRequestList()
       }
-            // if (result.status === 0) {
-      //   message.success(result.msg || '注册成功')
-      // } else {
-      //   message.error(result.msg || '注册失败')
-      // }
 
     }
 
@@ -139,7 +134,7 @@ const Home = () => {
     getRequestList()
     let serverQueueStatusTimer = setInterval(() => {
       getServerQueueStatus()
-    }, 30000);
+    }, 1000);
     return () => {
       clearInterval(serverQueueStatusTimer)
       serverQueueStatusTimer = null
