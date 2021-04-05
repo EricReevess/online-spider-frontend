@@ -1,30 +1,94 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import cookies from 'react-cookies'
-import { Button, Card, Input, Select, Space, Table, message, Modal } from 'antd'
-import { cancel, searchProductRequest, deleteUserGrabRequest, userRequestList } from '../../api'
-import ProductAddUpdate from './user-data-add-update'
+import { Button, Card, Space, Table, message, Modal, Checkbox, Divider } from 'antd'
+import { cancel, deleteUserGrabRequest, userRequestList,getExcelTableData } from '../../api'
 import UserDataDetail from './user-data-detail'
+import ExportExcel from './export-excel'
+// const { Option } = Select
+// const { Search } = Input
+const CheckboxGroup = Checkbox.Group
 
-const { Option } = Select
-const { Search } = Input
+const tableColumns = [
+	{
+		title: '标题',
+		dataIndex: 'title',
+	},
+	{
+		title: '分类',
+		dataIndex: 'category',
+	},
+	{
+		title: '作者',
+		dataIndex: 'media',
+	},
+	{
+		title: '关键词',
+		dataIndex: 'keywords',
+	},
+	{
+		title: '标签',
+		dataIndex: 'tags',
+	},
+	{
+		title: 'URL',
+		dataIndex: 'url',
+	},
+	{
+		title: '发布时间',
+		dataIndex: 'publish_time',
+	},
+	{
+		title: '新闻内容',
+		dataIndex: 'newsContentArray',
+	},
+]
+const options = tableColumns.map((elem) => ({
+	label: elem.title,
+	value: elem.dataIndex,
+}))
+const defaultValue = options.map((elem) => elem.value)
+const newsSource = [
+	{
+		name: '腾讯新闻',
+		value: 'tencentNews',
+	},
+]
+const newsCategories = {
+	tencentNews: [
+		{
+			name: '24小时热点',
+			value: '24hours',
+		},
+		{
+			name: '科技新闻',
+			value: 'tech',
+		},
+		{
+			name: '娱乐新闻',
+			value: 'ent',
+		},
+		{
+			name: '游戏新闻',
+			value: 'games',
+		},
+	],
+}
 
 const UserDataList = () => {
-	const updateRef = useRef(null)
-
-	// state
 	const [isLoading, setIsLoading] = useState(true)
-	const [addDrawerVisible, setAddDrawerVisible] = useState(false)
 	const [detailDrawerVisible, setDetailDrawerVisible] = useState(false)
 	const [requestList, setRequestList] = useState([])
 	const [currentGrabDataId, setCurrentGrabDataId] = useState('')
 	const [total, setTotal] = useState(0)
-	const [searchType, setSearchType] = useState('productName')
-	const [confirmLoading, setConfirmLoading] = useState(false)
+	//const [searchType, setSearchType] = useState('productName')
 	const [currentPageNum, setCurrentPageNum] = useState(1)
 	const [currentRequest, setCurrentRequest] = useState('')
 	const [deleteVisible, setDeleteVisible] = useState(false)
+	const [isModalVisible, setIsModalVisible] = useState(false)
+	const [checkedList, setCheckedList] = useState(defaultValue)
+	const [indeterminate, setIndeterminate] = React.useState(false)
+	const [checkAll, setCheckAll] = React.useState(true)
 
-	// 查看请求数据回调
 	const getGrabResultData = (grabbedDataId) => {
 		setDetailDrawerVisible(true)
 		setCurrentGrabDataId(grabbedDataId)
@@ -41,28 +105,22 @@ const UserDataList = () => {
 		setIsLoading(false)
 	}
 
-	// 抽屉关闭回调
-	const addDrawerClose = () => {
-		setAddDrawerVisible(false)
-		setConfirmLoading(false)
-	}
-
 	const detailDrawerClose = () => {
 		setDetailDrawerVisible(false)
 	}
 
 	// 搜索商品
-	const handleSearchProduct = async (keyword) => {
-		setIsLoading(true)
-		const { data: result } = await searchProductRequest(1, 5, keyword.trim(), searchType)
-		if (result.status === 0) {
-			const { total, list } = result.data
-			setTotal(total)
-			setRequestList(list)
-			setCurrentPageNum(1)
-		}
-		setIsLoading(false)
-	}
+	// const handleSearchRequest = async (keyword) => {
+	// 	setIsLoading(true)
+	// 	const { data: result } = await searchProductRequest(1, 5, keyword.trim(), searchType)
+	// 	if (result.status === 0) {
+	// 		const { total, list } = result.data
+	// 		setTotal(total)
+	// 		setRequestList(list)
+	// 		setCurrentPageNum(1)
+	// 	}
+	// 	setIsLoading(false)
+	// }
 
 	const deleteRequest = (render) => {
 		setDeleteVisible(true)
@@ -79,38 +137,39 @@ const UserDataList = () => {
 		setDeleteVisible(false)
 		getRequestList(currentPageNum)
 	}
-	const newsSource = useMemo(
-		() => [
-			{
-				name: '腾讯新闻',
-				value: 'tencentNews',
-			},
-		],
-		[]
-	)
-	const newsCategories = useMemo(
-		() => ({
-			tencentNews: [
-				{
-					name: '24小时热点',
-					value: '24hours',
-				},
-				{
-					name: '科技新闻',
-					value: 'tech',
-				},
-				{
-					name: '娱乐新闻',
-					value: 'ent',
-				},
-				{
-					name: '游戏新闻',
-					value: 'games',
-				},
-			],
-		}),
-		[]
-	)
+
+	const showModal = (grabbedDataId) => {
+    setCurrentGrabDataId(grabbedDataId)
+		setIsModalVisible(true)
+	}
+
+	const handleTableDownload = async() => {
+		if (checkedList.length === 0) {
+			message.warn('请至少选择一个字段')
+		} else {
+			const c = tableColumns.filter((elem) => checkedList.includes(elem.dataIndex))
+      let {data:result} = await getExcelTableData(currentGrabDataId, checkedList)
+      ExportExcel(c, result.data, 'result')
+			setIsModalVisible(false)
+		}
+	}
+
+	const handleCancel = () => {
+		setIsModalVisible(false)
+	}
+	const onChange = (list) => {
+		if (list.length < options.length) {
+			setIndeterminate(true)
+		} else {
+			setIndeterminate(false)
+		}
+		setCheckedList(list)
+	}
+	const onCheckAllChange = (e) => {
+		setCheckedList(e.target.checked ? defaultValue : [])
+		setIndeterminate(false)
+		setCheckAll(e.target.checked)
+	}
 	const columns = useMemo(
 		() => [
 			{
@@ -145,7 +204,7 @@ const UserDataList = () => {
 				dataIndex: 'limit',
 				key: 'limit',
 				width: 80,
-        sorter: (a, b) => a.limit - b.limit,
+				sorter: (a, b) => a.limit - b.limit,
 				sortDirections: ['descend', 'ascend'],
 			},
 			{
@@ -176,7 +235,9 @@ const UserDataList = () => {
 						>
 							查看结果
 						</Button>
-						<Button onClick={() => {}}>导出结果为Excle表格</Button>
+						<Button onClick={() => {
+              showModal(render.grabbedDataId)
+            }}>导出结果为Excle表格</Button>
 						<Button
 							onClick={() => {
 								deleteRequest(render)
@@ -188,29 +249,29 @@ const UserDataList = () => {
 				),
 			},
 		],
-		[newsCategories, newsSource]
+		[]
 	)
 
-	const cardTitle = (
-		<div>
-			<Select
-				value={searchType}
-				onChange={(value) => {
-					setSearchType(value)
-				}}
-			>
-				<Option value='productName'>按名称搜索</Option>
-				<Option value='productDesc'>按描述搜索</Option>
-			</Select>
-			<Search
-				placeholder='请输入关键字'
-				onSearch={(value) => {
-					handleSearchProduct(value)
-				}}
-				style={{ width: 200 }}
-			/>
-		</div>
-	)
+	// const cardTitle = (
+	// 	<div>
+	// 		<Select
+	// 			value={searchType}
+	// 			onChange={(value) => {
+	// 				setSearchType(value)
+	// 			}}
+	// 		>
+	// 			<Option value='productName'>按名称搜索</Option>
+	// 			<Option value='productDesc'>按描述搜索</Option>
+	// 		</Select>
+	// 		<Search
+	// 			placeholder='请输入关键字'
+	// 			onSearch={(value) => {
+	// 				handleSearchRequest(value)
+	// 			}}
+	// 			style={{ width: 200 }}
+	// 		/>
+	// 	</div>
+	// )
 	// 生命周期
 	useEffect(() => {
 		getRequestList()
@@ -221,8 +282,8 @@ const UserDataList = () => {
 		}
 	}, [])
 
-	return (
-		<Card title={cardTitle}>
+	return ( //title={cardTitle}
+		<Card >
 			<Table
 				bordered
 				rowKey='_id'
@@ -237,15 +298,6 @@ const UserDataList = () => {
 					showQuickJumper: true,
 					onChange: getRequestList,
 				}}
-			/>
-			<ProductAddUpdate
-				ref={updateRef}
-				drawerVisible={addDrawerVisible}
-				onClose={addDrawerClose}
-				confirmLoading={confirmLoading}
-				getProductList={getRequestList}
-				currentPageNum={currentPageNum}
-				setConfirmLoading={(value) => setConfirmLoading(value)}
 			/>
 			<UserDataDetail
 				onClose={detailDrawerClose}
@@ -263,6 +315,21 @@ const UserDataList = () => {
 				}}
 			>
 				<p>确定要删除该条目吗？</p>
+			</Modal>
+			<Modal
+				width={680}
+				title='导出结果为Excel表格'
+				visible={isModalVisible}
+				onOk={handleTableDownload}
+				onCancel={handleCancel}
+				okText='导出'
+				cancelText='取消'
+			>
+				<CheckboxGroup options={options} defaultValue={checkedList} value={checkedList} onChange={onChange} />
+				<Divider />
+				<Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+					全选
+				</Checkbox>
 			</Modal>
 		</Card>
 	)

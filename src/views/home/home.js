@@ -1,113 +1,103 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Col, Row, Form, Button, InputNumber, Input, message } from 'antd'
 import { grabRequest, requestQueueStatus, userRequestList } from '../../api'
 import { Select, Table } from 'antd'
 import { BugOutlined } from '@ant-design/icons'
-
 import cookies from 'react-cookies'
 import './home.less'
 const { Option } = Select
-const newsSource = useMemo(
-	() => [
+const newsSource = [
+	{
+		name: '腾讯新闻',
+		value: 'tencentNews',
+	},
+]
+const newsCategories = {
+	tencentNews: [
 		{
-			name: '腾讯新闻',
-			value: 'tencentNews',
+			name: '24小时热点',
+			value: '24hours',
+		},
+		{
+			name: '科技新闻',
+			value: 'tech',
+		},
+		{
+			name: '娱乐新闻',
+			value: 'ent',
+		},
+		{
+			name: '游戏新闻',
+			value: 'games',
 		},
 	],
-	[]
-)
-const newsCategories = useMemo(
-	() => ({
-		tencentNews: [
-			{
-				name: '24小时热点',
-				value: '24hours',
-			},
-			{
-				name: '科技新闻',
-				value: 'tech',
-			},
-			{
-				name: '娱乐新闻',
-				value: 'ent',
-			},
-			{
-				name: '游戏新闻',
-				value: 'games',
-			},
-		],
-	}),
-	[]
-)
+}
 
 // 列头信息
-const columns = useMemo(
-	() => [
-		{
-			title: '新闻源',
-			dataIndex: 'sourceName',
-			key: 'sourceName',
-			fixed: 'left',
-			width: 90,
-			render: (text) => newsSource.find((elem) => elem.value === text).name,
+const columns = [
+	{
+		title: '新闻源',
+		dataIndex: 'sourceName',
+		key: 'sourceName',
+		fixed: 'left',
+		width: 90,
+		render: (text) => newsSource.find((elem) => elem.value === text).name,
+	},
+	{
+		title: '类别',
+		dataIndex: 'category',
+		key: 'category',
+		fixed: 'left',
+		width: 110,
+		render: (text, render) => {
+			let { sourceName } = render
+			let categoryName = newsCategories[sourceName].find((elem) => elem.value === text).name
+			return categoryName
 		},
-		{
-			title: '类别',
-			dataIndex: 'category',
-			key: 'category',
-			fixed: 'left',
-			width: 110,
-			render: (text, render) => {
-				let { sourceName } = render
-				let categoryName = newsCategories[sourceName].find((elem) => elem.value === text).name
-				return categoryName
-			},
+	},
+	{
+		title: '关键词',
+		dataIndex: 'keyword',
+		key: 'keyword',
+		fixed: 'left',
+		width: 100,
+	},
+	{
+		title: '数量',
+		dataIndex: 'limit',
+		key: 'limit',
+		width: 80,
+	},
+	{
+		title: '创建时间',
+		dataIndex: 'create_time',
+		key: 'create_time',
+		render: (text, render) => new Date(text).toLocaleString(),
+	},
+	{
+		title: '完成时间',
+		dataIndex: 'grabTime',
+		key: 'grabTime',
+		render: (text, render) => new Date(text).toLocaleString(),
+	},
+	{
+		title: '当前状态',
+		dataIndex: 'state',
+		key: 'state',
+		width: 100,
+		render: (text, render) => {
+			switch (render.state) {
+				case 0:
+					return '处理中'
+				case -1:
+					return '已完成'
+				default:
+					return '排队中:' + render.state
+			}
 		},
-		{
-			title: '关键词',
-			dataIndex: 'keyword',
-			key: 'keyword',
-			fixed: 'left',
-			width: 100,
-		},
-		{
-			title: '数量',
-			dataIndex: 'limit',
-			key: 'limit',
-			width: 80,
-		},
-		{
-			title: '创建时间',
-			dataIndex: 'create_time',
-			key: 'create_time',
-			render: (text, render) => new Date(text).toLocaleString(),
-		},
-		{
-			title: '完成时间',
-			dataIndex: 'grabTime',
-			key: 'grabTime',
-			render: (text, render) => new Date(text).toLocaleString(),
-		},
-		{
-			title: '当前状态',
-			dataIndex: 'state',
-			key: 'state',
-			width: 100,
-			render: (text, render) => {
-				switch (render.state) {
-					case 0:
-						return '处理中'
-					case -1:
-						return '已完成'
-					default:
-						return '排队中:' + render.state
-				}
-			},
-			fixed: 'right',
-		},
-	],
-	[newsCategories, newsSource]
-)
+		fixed: 'right',
+	},
+]
 
 const Home = () => {
 	//source内存放分类数组

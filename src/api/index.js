@@ -103,6 +103,9 @@ const deleteUserGrabRequest = (uid, requestId) =>
 const getGrabbedData = (pageNum, pageSize, grabbedDataId) =>
   ajax('GET', '/spider/grab-data-list', {pageNum, pageSize, grabbedDataId})
 
+const getExcelTableData = (grabbedDataId, columnArray) =>
+  ajax('GET', '/spider/get_custom_table_data', {grabbedDataId, columnArray})
+
 export {
   loginRequest,
   weatherRequest,
@@ -131,6 +134,7 @@ export {
   userRequestList,
   deleteUserGrabRequest,
   getGrabbedData,
+  getExcelTableData,
   cancel
 
 }

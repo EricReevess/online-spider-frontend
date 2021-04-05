@@ -96,7 +96,6 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 		setWordCloudDrawerVisible(true)
 		setCurrentNews(render)
 	}
-
 	const wordCloudRender = () => {
 		const wordData = currentNews.wordCloud.map((elem) => ({
 			name: elem.word,
