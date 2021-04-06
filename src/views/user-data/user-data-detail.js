@@ -99,7 +99,7 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 	const wordCloudRender = () => {
 		const wordData = currentNews.wordCloud.map((elem) => ({
 			name: elem.word,
-			value: elem.weight * 100,
+			value: elem.weight * 200,
 		}))
 
 		let option = {
@@ -111,8 +111,8 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 				{
 					type: 'wordCloud',
 					shape: 'circle',
-					gridSize: 4,
-					sizeRange: [12, 60],
+					gridSize: 6,
+					sizeRange: [12, 80],
 					rotationRange: [-45, 0, 45, 90],
 					left: 'center',
 					top: 'center',
