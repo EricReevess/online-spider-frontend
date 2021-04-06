@@ -1,6 +1,6 @@
 const menuConfig = [
   {
-    title:'在线爬取',
+    title:'在线抓取',
     path:'/home',
     key:'/home',
     icon:'HomeOutlined',
