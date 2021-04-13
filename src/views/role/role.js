@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Input, message, Modal, Space, Table, Tree } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { addRoleRequest, cancel, deleteRoleRequest, getRolesRequest, updateRoleRequest } from '../../api'
@@ -64,12 +64,13 @@ const Role = ({userInfo, logout}) => {
     deleteRoleRequest(currentRole._id).then(result => {
       if (result.data.status === 0){
         message.success('角色删除成功')
+        getRoleList()
       } else {
         message.error(result.data.msg)
       }
       setDeleteVisible(false)
     })
-    getRoleList()
+    
   }
 
   const onCheck = (checkedKeys) => {
@@ -138,16 +139,14 @@ const Role = ({userInfo, logout}) => {
   }
 
 
-  const initRoleList = useCallback(getRoleList, [])
-
   useEffect(() => {
-    initRoleList()
+    getRoleList()
     return () => {
       if (cancel){
         cancel()
       }
     }
-  }, [initRoleList])
+  }, [])
 
 
   return (<Card title={title}

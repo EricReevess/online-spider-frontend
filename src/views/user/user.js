@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Card, Button, Table, Modal, Space, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { cancel, deleteUserRequest, getUsersRequest } from '../../api'
@@ -101,27 +101,23 @@ const User = () => {
   const handleDeleteOk = () => {
     deleteUserRequest(currentUserId).then(result => {
       if(result.data.status === 0) {
-        message.success('删除成功')
+        message.success(result.data.msg)
+        setModalVisible(false)
+        getUserList()
       } else{
-        message.error('删除失败，请重试')
+        message.error(result.data.msg)
       }
     })
-    setModalVisible(false)
-    getUserList()
   }
 
-  const initUserList = useCallback(() => {
-    getUserList()
-  }, [])
-
   useEffect(() => {
-    initUserList()
+    getUserList()
     return () => {
       if (cancel){
         cancel()
       }
     }
-  },[initUserList])
+  },[])
 
   return (<Card title={title}
   >

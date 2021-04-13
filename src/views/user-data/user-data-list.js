@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import cookies from 'react-cookies'
 import { Button, Card, Space, Table, message, Modal, Checkbox, Divider } from 'antd'
 import { cancel, deleteUserGrabRequest, userRequestList,getExcelTableData } from '../../api'
+import {newsSource, newsCategories} from '../../config/news-category-config'
 import UserDataDetail from './user-data-detail'
 import ExportExcel from './export-excel'
 // const { Option } = Select
@@ -47,32 +48,6 @@ const options = tableColumns.map((elem) => ({
 	value: elem.dataIndex,
 }))
 const defaultValue = options.map((elem) => elem.value)
-const newsSource = [
-	{
-		name: '腾讯新闻',
-		value: 'tencentNews',
-	},
-]
-const newsCategories = {
-	tencentNews: [
-		{
-			name: '24小时热点',
-			value: '24hours',
-		},
-		{
-			name: '科技新闻',
-			value: 'tech',
-		},
-		{
-			name: '娱乐新闻',
-			value: 'ent',
-		},
-		{
-			name: '游戏新闻',
-			value: 'games',
-		},
-	],
-}
 
 const UserDataList = () => {
 	const [isLoading, setIsLoading] = useState(true)

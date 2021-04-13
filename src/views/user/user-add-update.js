@@ -72,7 +72,7 @@ let UserAddUpdate = ({
           getUserList()
         }
       } else {
-        message.error('用户信息修改失败，请重试')
+        message.error(result.msg)
       }
     }
     setConfirmLoading(false)

@@ -3,35 +3,10 @@ import { Card, Col, Row, Form, Button, InputNumber, Input, message } from 'antd'
 import { grabRequest, requestQueueStatus, userRequestList } from '../../api'
 import { Select, Table } from 'antd'
 import { BugOutlined } from '@ant-design/icons'
+import {newsSource, newsCategories} from '../../config/news-category-config'
 import cookies from 'react-cookies'
 import './home.less'
 const { Option } = Select
-const newsSource = [
-	{
-		name: '腾讯新闻',
-		value: 'tencentNews',
-	},
-]
-const newsCategories = {
-	tencentNews: [
-		{
-			name: '24小时热点',
-			value: '24hours',
-		},
-		{
-			name: '科技新闻',
-			value: 'tech',
-		},
-		{
-			name: '娱乐新闻',
-			value: 'ent',
-		},
-		{
-			name: '游戏新闻',
-			value: 'games',
-		},
-	],
-}
 
 // 列头信息
 const columns = [
@@ -72,13 +47,13 @@ const columns = [
 		title: '创建时间',
 		dataIndex: 'create_time',
 		key: 'create_time',
-		render: (text, render) => new Date(text).toLocaleString(),
+		render: (text) => new Date(text).toLocaleString(),
 	},
 	{
 		title: '完成时间',
 		dataIndex: 'grabTime',
 		key: 'grabTime',
-		render: (text, render) => new Date(text).toLocaleString(),
+		render: (text) => text ? new Date(text).toLocaleString() : '未知',
 	},
 	{
 		title: '当前状态',
@@ -88,11 +63,11 @@ const columns = [
 		render: (text, render) => {
 			switch (render.state) {
 				case 0:
-					return '处理中'
+					return (<span style={{color:'#0984e3'}}>抓取中</span>)
 				case -1:
-					return '已完成'
+					return (<span style={{ color: '#01a3a4' }}>已完成</span>)
 				default:
-					return '排队中:' + render.state
+					return (<span style={{color:'#ff9f43'}}>排队中：{render.state}</span>)
 			}
 		},
 		fixed: 'right',
@@ -145,6 +120,10 @@ const Home = () => {
 				message.destroy()
 				message.success('添加抓取请求成功')
 				getRequestList()
+				setKeyword('')
+			} else if (result.status === 1) {
+				message.destroy()
+				message.error(result.msg)
 			}
 		}
 	}
@@ -179,6 +158,10 @@ const Home = () => {
 			serverQueueStatusTimer = null
 		}
 	}, [])
+
+	useEffect(() => {
+		getRequestList()
+	}, [isRunning, remainingRequestCount]);
 
 	return (
 		<Card className='home-card'>
@@ -259,9 +242,9 @@ const Home = () => {
 						<h3>
 							抓取请求执行状态：
 							{isRunning ? (
-								<span style={{ color: '#f00' }}>处理请求中</span>
+								<span style={{ color: '#0984e3' }}>处理请求中</span>
 							) : (
-								<span style={{ color: '#0f0' }}>空闲</span>
+								<span style={{ color: '#01a3a4' }}>空闲</span>
 							)}
 						</h3>
 						<br />
