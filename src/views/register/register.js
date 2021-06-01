@@ -130,7 +130,6 @@ const Register = ({ userInfo, login }) => {
       </Form>
     </div>)
   }
-
-
 }
+
 export default connect(state => ({ userInfo: state.userInfo }), { login })(Register)

@@ -11,7 +11,6 @@ import { connect } from 'react-redux'
 
 const Admin = ({userInfo}) => {
   let history = useHistory()
-  let uid = cookie.load('uid') 
   const logout = () => {
     message.warn('您已经退出登录了')
     history.replace('/login')

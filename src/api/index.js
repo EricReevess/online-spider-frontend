@@ -21,45 +21,6 @@ const weatherRequest = (location) => {
     })
   })
 }
-const getCategoriesRequest = parentId =>
-  ajax('GET', '/manage/category/list', { parentId })
-
-const getCategoryRequest = categoryId =>
-  ajax('GET', '/manage/category/info' , { categoryId })
-
-// categoryInfo:{类别名categoryName, 父级类别parentId}
-const addCategoryRequest = ({ categoryName, parentId }) =>
-  ajax('POST', '/manage/category/add', {
-  parentId: parentId, categoryName: categoryName
-})
-
-// updateCategoryInfo:{新类别名categoryName, 类别Id categoryId}
-const updateCategoryRequest = ({ categoryName, categoryId }) =>
-  ajax('POST', '/manage/category/update', {
-  categoryId: categoryId, categoryName: categoryName
-})
-
-const getProductListRequest = (pageNum, pageSize) =>
-  ajax('GET', '/manage/user-data/list', { pageNum, pageSize })
-
-const searchProductRequest = (pageNum, pageSize, keyword, searchType) =>
-  ajax('GET', '/manage/user-data/search', { pageNum, pageSize, [searchType]: keyword })
-
-// newProductInfo = {categoryId,pCategoryId,name,price,desc,imgs}
-const addProductRequest = newProductInfo =>
-  ajax('POST', '/manage/user-data/add', newProductInfo)
-
-const deleteProductRequest = productId =>
-  ajax('POST', '/manage/user-data/delete', {productId})
-
-const updateProductRequest = editedProductInfo =>
-  ajax('POST', '/manage/user-data/update', editedProductInfo)
-
-const updateProductStatusRequest = (productId, status) =>
-  ajax('POST', '/manage/user-data/updateStatus', {productId, status})
-
-const deleteImageRequest = name =>
-  ajax('POST','/manage/img/delete', {name})
 
 const getRolesRequest = () =>
   ajax('GET', '/manage/role/list')
@@ -109,17 +70,6 @@ const getExcelTableData = (grabbedDataId, columnArray) =>
 export {
   loginRequest,
   weatherRequest,
-  addCategoryRequest,
-  getCategoriesRequest,
-  updateCategoryRequest,
-  getProductListRequest,
-  searchProductRequest,
-  deleteImageRequest,
-  addProductRequest,
-  deleteProductRequest,
-  getCategoryRequest,
-  updateProductRequest,
-  updateProductStatusRequest,
   getRolesRequest,
   addRoleRequest,
   updateRoleRequest,

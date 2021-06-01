@@ -138,7 +138,7 @@ const Home = () => {
 	const getRequestList = async (pageNum = 1) => {
 		setCurrentPageNum((prevState) => (prevState !== pageNum ? pageNum : prevState))
 		setIsLoading(true)
-		const { data: result } = await userRequestList(pageNum, 8, cookies.load('uid'))
+		const { data: result } = await userRequestList(pageNum, 6, cookies.load('uid'))
 		if (result.status === 0) {
 			console.log(result)
 			const { total, list } = result.data
@@ -264,7 +264,7 @@ const Home = () => {
 							current: currentPageNum,
 							total,
 							position: ['bottomCenter'],
-							defaultPageSize: 8,
+							defaultPageSize: 6,
 							showQuickJumper: true,
 							onChange: getRequestList,
 						}}

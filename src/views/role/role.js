@@ -208,7 +208,6 @@ const Role = ({userInfo, logout}) => {
 
 }
 
-
 export default connect(
   state => ({userInfo:state.userInfo}),
   {logout}

@@ -25,34 +25,6 @@ const menuConfig = [
     key:'/role',
     icon:'UserOutlined',
   },
-  // {
-  //   title:'统计图表',
-  //   path:'/charts',
-  //   key:'/charts',
-  //   icon:'AreaChartOutlined',
-  //   children:[
-  //     {
-  //       title:'柱状图',
-  //       path:'/charts/bar',
-  //       key:'/charts/bar',
-  //       icon:'BarChartOutlined',
-  //     },
-  //     {
-  //       title:'折线图',
-  //       path:'/charts/line',
-  //       key:'/charts/line',
-  //       icon:'LineChartOutlined',
-
-  //     },
-  //     {
-  //       title:'饼图',
-  //       path:'/charts/pie',
-  //       key:'/charts/pie',
-  //       icon:'PieChartOutlined',
-
-  //     }
-  //   ]
-  // }
 
 ]
 export default menuConfig

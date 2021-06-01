@@ -1,6 +1,6 @@
 ## 项目描述
 
-1. 基于前后台分离的后台管理SPA，包括前端pc端以及后台服务，本人负责前端部分
+1. 基于前后台分离的在线爬虫SPA，包括前端pc端以及后台服务，本人负责前端部分
 2. 前端使用react + react-router-dom + redux + ant design UI以及 axios ，使用ES6 语法，以及babel语法转换以及webpack按需打包
 3. 后端使用 Node + Express + MongoDB
 4. 采用 模块化，组件化，工程化的模式开发
@@ -50,7 +50,7 @@ src
 ### `npm start`
 
 在开发模式下运行React App
-访问 [http://localhost:5000](http://localhost:5000)
+访问 [http://localhost:3000](http://localhost:3000)
 
 打包项目：
 

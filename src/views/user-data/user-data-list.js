@@ -5,8 +5,7 @@ import { cancel, deleteUserGrabRequest, userRequestList,getExcelTableData } from
 import {newsSource, newsCategories} from '../../config/news-category-config'
 import UserDataDetail from './user-data-detail'
 import ExportExcel from './export-excel'
-// const { Option } = Select
-// const { Search } = Input
+
 const CheckboxGroup = Checkbox.Group
 
 const tableColumns = [
@@ -83,19 +82,6 @@ const UserDataList = () => {
 	const detailDrawerClose = () => {
 		setDetailDrawerVisible(false)
 	}
-
-	// 搜索商品
-	// const handleSearchRequest = async (keyword) => {
-	// 	setIsLoading(true)
-	// 	const { data: result } = await searchProductRequest(1, 5, keyword.trim(), searchType)
-	// 	if (result.status === 0) {
-	// 		const { total, list } = result.data
-	// 		setTotal(total)
-	// 		setRequestList(list)
-	// 		setCurrentPageNum(1)
-	// 	}
-	// 	setIsLoading(false)
-	// }
 
 	const deleteRequest = (render) => {
 		setDeleteVisible(true)
@@ -227,27 +213,6 @@ const UserDataList = () => {
 		[]
 	)
 
-	// const cardTitle = (
-	// 	<div>
-	// 		<Select
-	// 			value={searchType}
-	// 			onChange={(value) => {
-	// 				setSearchType(value)
-	// 			}}
-	// 		>
-	// 			<Option value='productName'>按名称搜索</Option>
-	// 			<Option value='productDesc'>按描述搜索</Option>
-	// 		</Select>
-	// 		<Search
-	// 			placeholder='请输入关键字'
-	// 			onSearch={(value) => {
-	// 				handleSearchRequest(value)
-	// 			}}
-	// 			style={{ width: 200 }}
-	// 		/>
-	// 	</div>
-	// )
-	// 生命周期
 	useEffect(() => {
 		getRequestList()
 		return () => {
@@ -257,7 +222,7 @@ const UserDataList = () => {
 		}
 	}, [])
 
-	return ( //title={cardTitle}
+	return ( 
 		<Card >
 			<Table
 				bordered

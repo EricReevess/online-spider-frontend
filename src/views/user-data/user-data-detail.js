@@ -104,9 +104,7 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 
 		let option = {
 			backgroundColor: '#fff',
-			tooltip: {
-				//pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
-			},
+			tooltip: {},
 			series: [
 				{
 					type: 'wordCloud',
@@ -142,7 +140,6 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 	const handleWordCloudSave = () => {
 		if (wordCloudRef) {
 			const wordlCloudInstance = wordCloudRef.getEchartsInstance()
-			// then you can use any API of echarts.
 			const base64 = wordlCloudInstance.getDataURL({
 				// 导出的格式，可选 png, jpeg
 				type: 'png',
@@ -197,6 +194,7 @@ const UserDataDetail = ({ grabbedDataId, onClose, drawerVisible, ...restProps })
 					position: ['bottomCenter'],
 					defaultPageSize: 8,
 					showQuickJumper: true,
+					onChange: getNewsList
 				}}
 			/>
 			<Drawer

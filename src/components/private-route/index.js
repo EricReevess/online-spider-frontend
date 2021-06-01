@@ -1,13 +1,7 @@
 import React from 'react';
-import { Redirect, Route, useHistory, useLocation } from 'react-router-dom'
+import { Redirect, Route, useLocation } from 'react-router-dom'
 import tempMemoryUtil from '../../utils/tempMemoryUtil'
-import { message } from 'antd'
 
-
-/*if(permissionMenus.indexOf(location.pathname) === -1 ){
-  history.replace('/home')
-  message.error('您无权访问此页面')
-}*/
 const PrivateRoute = ({ component: Component, ...rest }) => {
   let location = useLocation()
   const { userInfo } = tempMemoryUtil
@@ -32,8 +26,5 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     />
   )
 }
-
-
-
 
 export default PrivateRoute
